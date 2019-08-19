@@ -1,0 +1,8 @@
+# ignore these folders
+.idea/
+__pycache__/
+venv/
+
+# ignore these files
+*.json
+
