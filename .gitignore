@@ -6,3 +6,5 @@ venv/
 # ignore these files
 *.json
 
+# secret.py - contains API key and user directory
+secret.py
