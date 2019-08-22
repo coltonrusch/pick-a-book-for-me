@@ -1,8 +1,7 @@
-from secret import API_KEY      # Goodreads API key hidden
+import json
 import requests
 import xmltodict                # the Goodreads API returns data as XML
-import json
-# 64067256  <-- my Goodreads ID
+from secret import API_KEY      # Goodreads API key hidden
 
 
 def get_genre(book_id):
@@ -26,15 +25,15 @@ def get_genre(book_id):
         if current_genre not in ["to-read", "currently-reading", "favorites", "owned", "books-i-own", "audiobook",
                                  "want"]:
             return current_genre
-        else:
-            i = i + 1
+
+        i = i + 1
 
 
 def get_user_shelves(user_id):
     """
     Goodreads API call to retrieve the shelves of user with ID user_id
     :param user_id: Goodreads ID for a given user
-    :return: array of shelves on the Goodreads user's account
+    :return: list of shelves on the Goodreads user's account
     """
     params = (
         ('key', {API_KEY}),
@@ -46,7 +45,7 @@ def get_user_shelves(user_id):
     json_data = json.loads(json_dump)
 
     user_shelves = []
-    for shelf in range(0, len(json_data["GoodreadsResponse"]["user"]["user_shelves"]["user_shelf"])):
+    for shelf in range(len(json_data["GoodreadsResponse"]["user"]["user_shelves"]["user_shelf"])):
         current_user_shelf = json_data["GoodreadsResponse"]["user"]["user_shelves"]["user_shelf"][shelf]["name"]
         user_shelves.append(current_user_shelf)
 

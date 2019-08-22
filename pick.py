@@ -23,13 +23,12 @@ def show_shelves(user_id):
 
 def out_of_genre_books(genre, genre_dict, genre_list):
     """
-    function that handles the case if the user keeps rejecting the book suggestions and it runs out of books
-    in a particular genre
-
+    function that handles the case if the user keeps rejecting the book suggestions and it runs out
+    of books in a particular genre
     :param genre: genre selected by user
     :param genre_dict: dictionary of pairs in the format:
                         "{book} by {author}" : "genre"
-    :param genre_list: array of genres in genre dict, with no duplicates
+    :param genre_list: list of genres in genre dict, with no duplicates
     :return: n/a
     """
     print(f"Sorry, there are no more {genre} books on your shelf. I have failed you!")
@@ -72,8 +71,8 @@ def out_of_genre_books(genre, genre_dict, genre_list):
 
 def random_book_by_genre(genre, genre_dict):
     """
-    given genre and a dictionary containing book-genre pairs, randomly selects a book from genre_dict that is mapped to
-    the value of genre
+    given genre and a dictionary containing book-genre pairs, randomly selects a book from
+    genre_dict that is mapped tp the value of genre
     :param genre: genre selected by user
     :param genre_dict: dictionary of pairs in the format:
                         "{book} by {author}" : "genre"
@@ -94,22 +93,24 @@ def random_book_by_genre(genre, genre_dict):
 
 def suggest_book_by_genre(genre, genre_dict, genre_list):
     """
-    prints a formatted suggestion of a book within a particular genre and asks if the user wants a new suggestion
+    prints a formatted suggestion of a book within a particular genre and asks if the user wants a
+    new suggestion
     :param genre: selected by user
     :param genre_dict: dictionary of pairs in the format:
                         "{book} by {author}" : "genre"
-    :param genre_list:  array of genres in genre dict, with no duplicates
+    :param genre_list: list of genres in genre dict, with no duplicates
     :return: n/a
     """
     suggestion = random_book_by_genre(genre, genre_dict)
 
-    if suggestion is None:
+    if not suggestion:
         out_of_genre_books(genre, genre_dict, genre_list)
 
     print(f"In my opinion, you should read {suggestion}.")
 
     while True:
-        answer = input("Do you like this suggestion? If not, I'll think of a new book. (yes or no)\n")
+        answer = input("Do you like this suggestion? If not, I'll think of a new book. "
+                       "(yes or no)\n")
         if answer.lower() == 'yes':
             print("Thank you for taking my suggestion! Feel free to ask again anytime.")
             sys.stdout.write("Exiting...")
@@ -148,7 +149,7 @@ def dict_genres(json_data):
     """
     total = json_data["GoodreadsResponse"]['reviews']["@total"]
     genre_dict = {}
-    for i in range(0, int(total)):
+    for i in range(int(total)):
         title = json_data["GoodreadsResponse"]["reviews"]["review"][i]["book"]["title"]
         author = json_data["GoodreadsResponse"]["reviews"]["review"][i]["book"]["authors"]["author"]["name"]
         book_id = json_data["GoodreadsResponse"]["reviews"]["review"][i]["book"]["id"]["#text"]
@@ -188,14 +189,16 @@ def load():
 
 def suggest_book(json_data):
     """
-    prints a formatted suggestion of a book on a specific shelf and asks if the user wants a new suggestion
+    prints a formatted suggestion of a book on a specific shelf and asks if the user wants a
+    new suggestion
     :param json_data: json data provided by the Goodreads API for a given user shelf
     :return: n/a
     """
     print(f"In my opinion, you should read {random_book(json_data)}.")
 
     while True:
-        answer = input("Do you like this suggestion? If not, I'll think of a new book. (yes or no)\n")
+        answer = input("Do you like this suggestion? If not, I'll think of a new book. "
+                       "(yes or no)\n")
         if answer.lower() == 'yes':
             print("Thank you for taking my suggestion! Feel free to ask again anytime.")
             sys.stdout.write("Exiting...")
@@ -213,7 +216,8 @@ def suggest_book(json_data):
 
 def main():
     """
-    suggests a book for the user to read via the Goodreads API, guided by user input for shelf and genre selection
+    suggests a book for the user to read via the Goodreads API, guided by user input for shelf and
+    genre selection
     :return: n/a
     """
     print("Hello!\nDon't know what to read next? Let me help with that! "
@@ -234,7 +238,8 @@ def main():
     json_shelf_data = goodreads.get_shelf(user_id, shelf)
 
     while True:
-        specific_genre = input("Would you like me to pick a book of a specific genre? (yes or no)\n").lower()
+        specific_genre = input("Would you like me to pick a book of a specific genre? "
+                               "(yes or no)\n").lower()
 
         if specific_genre == 'yes':
             print(f"Here is a list of the genres you have on '{shelf}':")
