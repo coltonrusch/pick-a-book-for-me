@@ -6,5 +6,8 @@ venv/
 # ignore these files
 *.json
 
-# secret.py - contains API key and user directory
+# secret.py - contains Goodreads API key and user directory
 secret.py
+
+# my_goodreads.txt - contains my Goodreads ID
+my_goodreads.txt
